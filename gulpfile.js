@@ -47,6 +47,12 @@
 			.pipe(connect.reload());
 	});
 
+	gulp.task("images", function () {
+		gulp.src(config.paths.images)
+			.pipe(gulp.dest(config.paths.dist + "/images"))
+			.pipe(connect.reload());
+	});
+
 	gulp.task("js", function () {
 		browserify(config.paths.mainJs)
 			.transform(reactify)
@@ -74,6 +80,6 @@
 		gulp.watch(config.paths.js, ["js", "lint"]);
 	});
 
-	gulp.task("default", ["html", "js", "css", "lint", "open", "watch"]);
+	gulp.task("default", ["html", "images", "js", "css", "lint", "open", "watch"]);
 
 })();
