@@ -2,5 +2,9 @@
   "name": "react-flux",
   "globalDependencies": {
     "react": "registry:dt/react#0.14.0+20160621225615"
+  },
+  "dependencies": {
+    "react-router": "registry:npm/react-router#2.4.0+20160616150328",
+    "requirejs": "registry:npm/requirejs#2.2.0+20160319062357"
   }
 }
