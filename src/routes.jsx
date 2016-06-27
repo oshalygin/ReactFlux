@@ -6,6 +6,7 @@ var Router = require('react-router');
 var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 
+
 var Application = require("./components/application.jsx");
 
 var routes = (
