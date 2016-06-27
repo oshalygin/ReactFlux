@@ -4,7 +4,7 @@ var React = require("react");
 var Home = require("./components/homePage");
 var About = require("./components/about/aboutPage");
 var Contacts = require("./components/contacts/contactsPage");
-var Authors = require("./components/authors/authorsPage.jsx");
+var AuthorPage = require("./components/authors/authorsPage.jsx");
 var Header = require("./components/common/header");
 
 (function (win) {
@@ -22,7 +22,7 @@ var Header = require("./components/common/header");
                     Child = Contacts;
                     break;
                 case "authors":
-                    Child = Authors;
+                    Child = AuthorPage;
                     break;
                 default:
                     Child = Home;
