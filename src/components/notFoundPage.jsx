@@ -14,4 +14,6 @@ var NotFoundPage = React.createClass({
             </div>
         );
     }
-})
+});
+
+module.exports = NotFoundPage;
