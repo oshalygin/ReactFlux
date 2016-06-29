@@ -10,6 +10,13 @@ var ManageAuthorPage = React.createClass({
     mixins: [
         Router.Navigation
     ],
+    statics: {
+        willTransitionFrom: function (transition, component) {
+            if (component.state.dirty && !confirm("Leave without saving?")) {
+                transition.abort();
+            }
+        }
+    },
 
     getInitialState: function () {
         return {
@@ -18,11 +25,13 @@ var ManageAuthorPage = React.createClass({
                 firstName: "",
                 lastName: ""
             },
-            errors: {}
+            errors: {},
+            dirty: false
         };
     },
 
     setAuthorState: function (event) {
+        this.setState({ dirty: true });
         var field = event.target.name;
         var value = event.target.value;
         this.state.author[field] = value;
@@ -34,11 +43,11 @@ var ManageAuthorPage = React.createClass({
         this.state.errors = {};
 
         if (this.state.author.firstName.length < 3) {
-            this.state.errors = "The first name needs to be at least 3 characters long";
+            this.state.errors.firstName = "The first name needs to be at least 3 characters long";
             formIsValid = false;
         }
         if (this.state.author.lastName.length < 3) {
-            this.state.errors = "The last name needs to be at least 3 characters long";
+            this.state.errors.lastName = "The last name needs to be at least 3 characters long";
             formIsValid = false;
         }
 
@@ -47,23 +56,32 @@ var ManageAuthorPage = React.createClass({
 
     },
 
+    componentWillMount: function () {
+        var authorId = this.props.params.id
+
+        if (!!authorId) {
+            var author = AuthorApi.getAuthorById(authorId);
+            this.setState({ author: author });
+        }
+    },
+
     saveAuthor: function (event) {
         event.preventDefault();
-
         if (!this.authorFormIsValid()) {
             return;
         }
 
         AuthorApi.saveAuthor(this.state.author);
-        var savedMessage = "Saved: " + this.state.author.firstName + " " + this.state.author.lastName
+        var savedMessage = "Saved: " + this.state.author.firstName + " " + this.state.author.lastName;
         toastr.success(savedMessage);
+        this.setState({ dirty: false });
         this.transitionTo("authors");
     },
 
     render: function () {
         return (
             <div>
-                <AuthorForm author={this.state.author} onChange={this.setAuthorState} onSave={this.saveAuthor} />
+                <AuthorForm author={this.state.author} onChange={this.setAuthorState} onSave={this.saveAuthor} errors={this.state.errors} />
             </div>
         );
     }
