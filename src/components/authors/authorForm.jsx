@@ -1,31 +1,32 @@
 "use strict";
 var React = require("react");
+var TextInput = require("../common/textInput.jsx");
 
 var AuthorForm = React.createClass({
 
     render: function () {
         return (
-            <form>
-                <h4>Manage Author</h4>
-                <label htmlFor="firstName">First Name</label>
-                <input type="text"
-                    name="firstName"
-                    className="form-control"
-                    placeholder="First Name"
-                    ref="firstName" value={this.props.author.firstName}
-                    onChange={this.props.onChange} />
-                <br />
+            <div>
+                <h3>Manage Author</h3>
+                <form className="col-md-offset-4 col-md-4 ">
+                    <TextInput
+                        name = "firstName"
+                        label = "First Name"
+                        value={this.props.author.firstName}
+                        errors={this.props.errors.firstName}
+                        onChange={this.props.onChange} />
+                    <br/>
+                    <TextInput
+                        name = "lastName"
+                        label = "Last Name"
+                        value={this.props.author.lastName}
+                        errors={this.props.errors.lastName}
+                        onChange={this.props.onChange} />
+                    <br/>
 
-                <label htmlFor="lastName">Last Name</label>
-                <input type="text"
-                    name="lastName"
-                    className="form-control"
-                    placeholder="Last Name"
-                    ref="lastName" value={this.props.author.lastName}
-                    onChange={this.props.onChange} />
-                <br />
-                <input type="submit" value="Save" className="btn btn-primary" />
-            </form>
+                    <input type="submit" onClick={this.props.onSave} value="Save" className="btn btn-primary" />
+                </form>
+            </div>
         );
     }
 });
