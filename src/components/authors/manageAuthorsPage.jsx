@@ -74,9 +74,17 @@ var ManageAuthorPage = React.createClass({
             return;
         }
 
-        AuthorAction.createAuthor(this.state.author);
-        var savedMessage = "Saved: " + this.state.author.firstName + " " + this.state.author.lastName;
-        toastr.success(savedMessage);
+        var toastrMessage;
+        if (!!this.state.author.id) {
+            AuthorAction.updateAuthor(this.state.author);
+            toastrMessage = "Updated: " + this.state.author.firstName + " " + this.state.author.lastName;
+        }
+        else {
+            AuthorAction.createAuthor(this.state.author);
+            toastrMessage = "Saved: " + this.state.author.firstName + " " + this.state.author.lastName;
+
+        }
+        toastr.success(toastrMessage);
         this.setState({ dirty: false });
         this.transitionTo("authors");
     },
